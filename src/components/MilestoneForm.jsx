@@ -1,0 +1,4 @@
+import { useState } from 'react'
+import Modal from './Modal'
+import DeadlinePicker from './DeadlinePicker'
+export default function MilestoneForm({milestone,goalId,onSave,onClose}){const[content,setContent]=useState(milestone?.content||''),[deadline,setDeadline]=useState(milestone?.deadline||'');const submit=e=>{e.preventDefault();if(!content.trim()||!deadline)return;onSave({...milestone,goalId:milestone?.goalId||goalId,content:content.trim(),deadline});onClose()};return <Modal title={milestone?'小目標を編集':'小目標を追加'} onClose={onClose}><form onSubmit={submit} className="form-stack"><label>小目標の内容<input autoFocus value={content} onChange={e=>setContent(e.target.value)} placeholder="7月31日までに57kg" required/></label><DeadlinePicker value={deadline} onChange={setDeadline} kind="milestone"/><button className="primary-button" disabled={!deadline}>{milestone?'変更を保存':'追加する'}</button></form></Modal>}
